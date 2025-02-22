@@ -1,0 +1,20 @@
+*{
+  padding: 0;
+  margin: 0;
+  font-family: "Mukta", sans-serif;
+  
+}
+body{
+  /* background-image: url('/public/bg1.svg'); */
+  background-size: cover;
+
+}
+
+
+
+input::placeholder {
+  color: black;
+}
+.search::placeholder{
+  margin-left: 60px;
+}

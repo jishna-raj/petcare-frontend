@@ -1,0 +1,97 @@
+.heading{
+    
+    text-shadow: 6px 6px black;
+    font-size: 90px;
+}
+h3{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.land{
+
+    background-color: rgba(26, 119, 104, 0.244);
+}
+.bk{
+    background-color: rgba(26, 119, 104, 0.244);
+}
+.land h5{
+    
+    font-weight: bolder;
+    
+}
+p{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.cd{
+    background-color:  rgba(26, 119, 104, 0.244); ;
+}
+.secn{
+    background-color:rgba(88, 89, 89, 0.184);
+    height: 40vh;
+}
+.card-hover{
+background-color:#bbbfb290;
+}
+
+.card-hover {
+    transition:  0.5s ease;
+  }
+  
+  .card-hover:hover {
+    box-shadow: 0 8px 20px  rgba(0, 0, 0, 0.303);
+    
+  }
+  .hover-effect {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .hover-effect:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  /* .clippy{
+    background-image: url("/bg1.svg"); */
+    
+    /* clip-path: polygon(0 0, 100% 0, 45% 100%, 0% 100%);     */
+  /* } */
+  .footer{
+    background-color: rgba(135, 136, 136, 0.182);
+  }
+  .profile{
+    background-color: rgba(132, 139, 137, 0.712);
+  }
+  .cover {
+    background-image: url("bk1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 250px;
+    width: 100%;
+    position: relative;
+  }
+  
+  
+
+  .circle-image {
+    width: 20vw;   /* Set a responsive width based on the viewport width */
+    height: 20vw;  /* Keep the height proportional to the width for a perfect circle */
+    max-width: 200px;  /* Limit the maximum width */
+    max-height: 200px; /* Limit the maximum height */
+    min-width: 100px;  /* Set a minimum width so it doesn't get too small */
+    min-height: 100px; /* Set a minimum height */
+    border-radius: 50%;  /* Makes the image circular */
+    object-fit: cover;   /* Ensures the image fits within the circle */
+    position: absolute;  /* Allows positioning within the parent */
+    transform: translate(0, 50%);  /* Moves the image vertically to sit on the bottom line */
+
+    bottom: 0;  /* Keeps the image aligned at the bottom */
+    left: 280px; /* Keeps the image positioned 260px from the left */
+    border: 3px solid white; /* Optional: adds a border around the circle */
+}
+
+body{
+  background-image: url("https://images.squarespace-cdn.com/content/v1/649936aa2f62cd32067a7bc3/430a37cf-1f9e-4afb-b17b-7d68b11e2483/wholesale+page+%281%29.png");
+  background-size: cover;
+  background-position: center;
+  
+}
+
