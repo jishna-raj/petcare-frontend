@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -13,12 +13,14 @@ import { addEmployeeResponseContext, messageSentResponseContext } from '../conte
 import Userforadmin from '../component/Userforadmin';
 import Swal from 'sweetalert2';
 
+
 function Admin() {
 
 const [booking,setBooking]=useState([])
 const [employee,setEmployee]=useState([])
 const {addEmployee}=useContext(addEmployeeResponseContext)
 const {setMessagesent}=useContext(messageSentResponseContext)
+const navigate = useNavigate()
 
   const getEmployee =async()=>{
     const token =sessionStorage.getItem("token")
@@ -35,6 +37,15 @@ console.log(token);
     setEmployee(result.data)
    
   }
+
+
+  const logout =async()=>{
+    sessionStorage.removeItem('existingUser')
+    sessionStorage.removeItem('token')
+    navigate('/')
+    
+  }
+
 
   //delete
 
@@ -106,8 +117,8 @@ console.log(token);
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ms-auto">
-                <Link to={'/home'} className='text-dark fw-bold me-4' style={{textDecoration:'none'}}>Home</Link>
-                <Link to={'/login'} className='text-dark fw-bold' style={{textDecoration:'none'}}>Logout</Link>
+                <Link to={'/'} className='text-dark fw-bold me-4' style={{textDecoration:'none'}}><button className='btn text-dark fw-bold'>Home</button></Link>
+                <button className='btn text-dark fw-bold' style={{textDecoration:'none'}}  onClick={logout}>Logout</button>
               </Nav>
             </Navbar.Collapse>
           </Container>

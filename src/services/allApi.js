@@ -76,6 +76,51 @@ export const getMessageApi =async(reqHeader)=>{
 
 
 
+//adoption
+
+
+export const adoptionregisterApi =async(reqBody)=>{
+    return await commonApi('POST',`${serverUrl}/adreg`,reqBody,"")
+}
+
+export const adoptionloginApi =async(reqBody)=>{
+    return await commonApi('POST',`${serverUrl}/adlogin`,reqBody,"")
+}
+
+//get userdetails
+
+export const getadoptionuserdataApi =async(reqHeader)=>{
+    return await commonApi('GET',`${serverUrl}/getauser`,"",reqHeader)
+}
+//edit profile
+
+export const editadoptionUserApi =async(reqBody,reqHeader)=>{
+    return await commonApi('PUT',`${serverUrl}/edit-adoption-profile`,reqBody,reqHeader)
+}
+
+
+
+
+export const addpetApi = async(reqBody,reqHeader) =>{
+
+    return await commonApi('POST',`${serverUrl}/service`,reqBody,reqHeader)
+}
+
+
+
+export const getAllPetApi = async()=>{
+
+    return await commonApi('GET',`${serverUrl}/get-all-pet`)
+}
+
+
+export const getAPetController = async(id)=>{
+
+
+    return await commonApi('GET',`${serverUrl}/get-a-pet/${id}`)
+}
+
+
 
 
 

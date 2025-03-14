@@ -18,3 +18,12 @@ input::placeholder {
 .search::placeholder{
   margin-left: 60px;
 }
+
+
+
+body{
+  background-image: url("https://images.squarespace-cdn.com/content/v1/649936aa2f62cd32067a7bc3/430a37cf-1f9e-4afb-b17b-7d68b11e2483/wholesale+page+%281%29.png");
+  background-size: cover;
+  background-position: center;
+  
+}

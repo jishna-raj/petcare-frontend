@@ -1,0 +1,529 @@
+/* service.css */
+
+/* Global Styles */
+.service-container {
+    padding: 3rem 0;
+    background-color: #f9f9f9;
+    font-family: 'Nunito', sans-serif;
+    color: #333;
+  }
+  
+  .service-container h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #4a6fa5;
+    position: relative;
+  }
+  
+  .service-container h2:after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #6a9c78, #4a7c59);
+    margin: 0.5rem auto 2rem;
+    border-radius: 3px;
+  }
+  
+  .service-container h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #4a7c59;
+  }
+  
+  .service-container p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #555;
+  }
+  
+  .service-container img {
+    width: 100%;
+    height: 20
+    0px;
+   
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .service-container img:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Adopt Section */
+  .adopt-section, .post-pet-section {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .adopt-section:hover, .post-pet-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .adopt-section::before, .post-pet-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #6a9c78, #4a7c59);
+  }
+  
+  .info-grid {
+    margin: 1.5rem 0;
+  }
+  
+  .info-grid ul, .info-grid ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .info-grid li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+    position: relative;
+  }
+  
+  .info-grid ul li::before {
+    content: "🐾";
+    position: absolute;
+    left: -1.5rem;
+    color: #4a7c59;
+  }
+  
+  .info-grid ol {
+    counter-reset: custom-counter;
+    list-style-type: none;
+    padding-left: 2rem;
+  }
+  
+  .info-grid ol li {
+    counter-increment: custom-counter;
+  }
+  
+  .info-grid ol li::before {
+    content: counter(custom-counter);
+    position: absolute;
+    left: -2rem;
+    width: 24px;
+    height: 24px;
+    background-color: #4a7c59;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+  
+  /* Post Pet Section */
+  .post-pet-section form {
+    margin-top: 1.5rem;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .input-box {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-box.full-width {
+    grid-column: span 2;
+  }
+  
+  .input-box label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #4a6fa5;
+  }
+  
+  .input-box input, 
+  .input-box select, 
+  .input-box textarea {
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .input-box input:focus, 
+  .input-box select:focus, 
+  .input-box textarea:focus {
+    outline: none;
+    border-color: #4a7c59;
+    box-shadow: 0 0 0 2px rgba(74, 124, 89, 0.2);
+  }
+  
+  .file-input-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f7f3;
+    border: 2px dashed #4a7c59;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .file-input-label:hover {
+    background-color: #e0eee5;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
+  .file-input-text {
+    color: #4a7c59;
+    font-weight: 600;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  /* CTA Button */
+  .cta-button {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(90deg, #4a7c59, #6a9c78);
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cta-button:hover {
+    background: linear-gradient(90deg, #3e6a4b, #5a8b68);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .cta-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .vaccine-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 10px;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+  }
+  
+  .vaccine-checkboxes label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: normal;
+  }
+  
+  .vaccine-checkboxes input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+  }
+
+
+/* Enhanced Preparation Tips Styling */
+.preparation-tips {
+    margin: 60px 0;
+    padding: 40px;
+    background-color: #f8f9fa;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  }
+  
+  .preparation-tips::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(90deg, #4a7c59, #88a0a8);
+  }
+  
+  .preparation-tips h3 {
+    color: #2c3e50;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 35px;
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 15px;
+  }
+  
+  .preparation-tips h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: #4a7c59;
+    border-radius: 2px;
+  }
+  
+  .preparation-tips .d-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+  }
+  
+  .prep-card {
+    flex: 1;
+    min-width: 280px;
+    max-width: 400px;
+    background-color: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  
+  .prep-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .prep-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(74, 124, 89, 0.05);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+    z-index: -1;
+  }
+  
+  .prep-card h4 {
+    color: #4a7c59;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px dashed rgba(74, 124, 89, 0.2);
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Add icons before the headings */
+  .prep-card h4::before {
+    content: '🐕';
+    margin-right: 10px;
+    font-size: 1.8rem;
+  }
+  
+  .prep-card:nth-child(2) h4::before {
+    content: '🐈';
+  }
+  
+  .prep-card ul {
+    padding-left: 5px;
+    list-style-type: none;
+  }
+  
+  .prep-card li {
+    margin-bottom: 14px;
+    padding-left: 28px;
+    position: relative;
+    font-size: 1.05rem;
+    color: #4a4a4a;
+  }
+  
+  .prep-card li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #4a7c59;
+    font-weight: bold;
+  }
+  
+  /* Animation for cards */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .prep-card:nth-child(1) {
+    animation: fadeIn 0.6s ease forwards;
+  }
+  
+  .prep-card:nth-child(2) {
+    animation: fadeIn 0.6s 0.2s ease forwards;
+    animation-fill-mode: both;
+  }
+
+
+
+  .section-title {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    border-bottom: 2px solid #e74c3c;
+    padding-bottom: 0.5rem;
+    margin: 1.5rem 0 1rem;
+    grid-column: 1 / -1;
+  }
+  
+  .required {
+    color: #e74c3c;
+    margin-left: 3px;
+  }
+  
+  .age-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  
+  .vaccine-grid, .trait-grid, .checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.8rem;
+    padding: 10px;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+  }
+  
+  .checkbox-group label, .trait-grid label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: normal;
+  }
+  
+  input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+  }
+  
+  textarea::placeholder {
+    color: #95a5a6;
+    font-style: italic;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .preparation-tips {
+      padding: 30px 20px;
+      margin: 40px 0;
+    }
+    
+    .prep-card {
+      min-width: 100%;
+    }
+    
+    .preparation-tips h3 {
+      font-size: 1.75rem;
+    }
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .input-box.full-width {
+      grid-column: span 1;
+    }
+    
+    .service-container h2 {
+      font-size: 2rem;
+    }
+    
+    .service-container h3 {
+      font-size: 1.3rem;
+    }
+    
+    .service-container p {
+      font-size: 1rem;
+    }
+    
+    .adopt-section, .post-pet-section {
+      padding: 1.5rem;
+    }
+  }
+  
+  /* Additional Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .adopt-section {
+    animation: fadeIn 0.8s ease-out;
+  }
+  
+  .post-pet-section {
+    animation: fadeIn 0.8s ease-out 0.2s both;
+  }
+  
+  /* Custom Placeholder Styles */
+  .input-box input::placeholder {
+    color: #aaa;
+    font-style: italic;
+  }
+  
+  /* Success Message Styling (for future use) */
+  .success-message {
+    background-color: #dff2e9;
+    color: #4a7c59;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+  }
+  
+  /* No Results Placeholder (for future use) */
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: #888;
+  }

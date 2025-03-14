@@ -21,7 +21,7 @@ function Header() {
 
   
   return (
-    <div className='container-fluid p-3 shadow-sm  '>
+    <div className='container p-3 shadow-sm  '>
     <Navbar expand="lg" className='nav'>
   <Container>
     <Navbar.Brand href="#home"> 
@@ -37,6 +37,11 @@ function Header() {
        <Link style={{textDecoration:'none'}}> <Nav.Link  className='text-black'>Home</Nav.Link></Link>
         <Link to={'/login'} style={{textDecoration:'none'}}><Nav.Link href="#link" className='text-black'>Login</Nav.Link></Link>
        <Link to={'/register'} style={{textDecoration:'none'}}> <Nav.Link href="#Auth"  className='text-black'>Register</Nav.Link></Link>
+
+       <Link to={'/adoption'} style={{textDecoration:'none'}}> <button className='btn btn-outline-success'>Get a Pet</button></Link>
+
+
+
       </Nav>
 
 :

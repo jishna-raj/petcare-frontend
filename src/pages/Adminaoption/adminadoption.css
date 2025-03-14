@@ -1,0 +1,211 @@
+/* Adminadoption.css */
+
+/* General Layout */
+.admin-container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  .sidebar {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .main-content {
+    margin-left: 250px; /* Match sidebar width */
+    padding: 20px;
+  }
+  
+  /* Sidebar Styles */
+  .sidebar-sticky {
+    position: sticky;
+    top: 0;
+    padding-top: 20px;
+  }
+  
+  .sidebar h4 {
+    color: #2c3e50;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .sidebar .btn-link {
+    width: 100%;
+    text-align: left;
+    color: #34495e;
+    padding: 10px 20px;
+    margin: 5px 0;
+    border-radius: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .sidebar .btn-link:hover {
+    background-color: #ecf0f1;
+    color: #2980b9;
+    text-decoration: none;
+  }
+  
+  /* Dashboard Cards */
+  .dashboard-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .dashboard-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-title {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+  }
+  
+  .card-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2c3e50;
+  }
+  
+  /* Tables */
+  .table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .table thead th {
+    background-color: #34495e;
+    color: white;
+    border: none;
+  }
+  
+  .table tbody tr {
+    transition: background-color 0.3s ease;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  /* Badges */
+  .badge {
+    padding: 0.5em 0.75em;
+    font-size: 0.9em;
+    font-weight: 500;
+  }
+  
+  .bg-success {
+    background-color: #27ae60 !important;
+  }
+  
+  .bg-warning {
+    background-color: #f1c40f !important;
+  }
+  
+  .bg-secondary {
+    background-color: #95a5a6 !important;
+  }
+  
+  /* Buttons */
+  .btn-action {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 4px;
+    margin: 0 2px;
+  }
+  
+  .btn-success {
+    background-color: #27ae60;
+    border-color: #27ae60;
+  }
+  
+  .btn-danger {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+  }
+  
+  .btn-info {
+    background-color: #3498db;
+    border-color: #3498db;
+  }
+  
+  /* Forms */
+  .form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-label {
+    font-weight: 500;
+    color: #34495e;
+  }
+  
+  .form-control {
+    border-radius: 6px;
+    border: 1px solid #dfe6e9;
+    padding: 0.75rem 1rem;
+  }
+  
+  .form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+  
+    .main-content {
+      margin-left: 0;
+      padding: 15px;
+    }
+  
+    .dashboard-card {
+      margin-bottom: 15px;
+    }
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .table tbody tr {
+    animation: fadeIn 0.5s ease forwards;
+  }
+  
+  .table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+  .table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+  .table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+  /* Add more as needed */

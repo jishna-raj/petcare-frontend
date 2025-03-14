@@ -1,70 +1,100 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faInstagram,  faWhatsapp, faXTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faFacebook, faInstagram, faWhatsapp, faXTwitter } from '@fortawesome/free-brands-svg-icons'
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import './footer.css'
 
 function Footer() {
-  
+
   return (
     <>
-<div className='footer pt-4 shadow-lg'>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-3">
-            <Link to={"/"} style={{textDecoration:"none"}}>
-            <h4 style={{ color: 'black' }} > <img
-                alt=""
-                src="./animal1.png"
-                width="44"
-                height="48"
-                className="d-inline-block "
-              />{' '}PetPulse</h4>
-            </Link> 
-              <h4 style={{ color: 'black', fontSize: "20px", fontWeight: "normal" }}>Contact with us</h4>
-              <div className='d-flex justify-content-between mt-4 me-4'>
-                <FontAwesomeIcon icon={faInstagram} />
-                <FontAwesomeIcon icon={faFacebook} />
-                <FontAwesomeIcon icon={faXTwitter} />
-                <FontAwesomeIcon icon={faWhatsapp} />
+      <div className="petpulse-footer">
+        <div className="container-fluid">
+          {/* Main Footer Content */}
+          <div className="footer-content p-5">
+            {/* Brand Column */}
+            <div className="footer-brand">
+              <Link to="/" className="brand-link" style={{textDecoration:'none'}}>
+                <div className="brand-container">
+                  <img
+                    alt="PetPulse Logo"
+                    src="./animal1.png"
+                    className="brand-logo"
+                  />
+                  <h2 className="brand-text">TheVelvetPaw</h2>
+                </div>
+              </Link>
+              <p className="brand-tagline">Connecting Hearts with Paws</p>
+
+              <div className="social-container">
+                <h6 className="social-title">Join Our Community</h6>
+                <div className="social-icons">
+                  <a href="#" className="social-link instagram">
+                    <FontAwesomeIcon icon={faInstagram} />
+                  </a>
+                  <a href="#" className="social-link facebook">
+                    <FontAwesomeIcon icon={faFacebook} />
+                  </a>
+                  <a href="#" className="social-link twitter">
+                    <FontAwesomeIcon icon={faXTwitter} />
+                  </a>
+                  <a href="#" className="social-link whatsapp">
+                    <FontAwesomeIcon icon={faWhatsapp} />
+                  </a>
+                </div>
               </div>
-  
             </div>
-            <div className="col-md-3 text-black">
-              <p>About us</p>
-              <p>Career</p>
-              <p>Employer home</p>
-              <p>Sitemap</p>
-              <p>Credits</p>
-  
+
+            {/* Footer Links */}
+            <div className="footer-links-container">
+              <div className="footer-links-column">
+                <h5 className="footer-heading">Company</h5>
+                <ul className="footer-links">
+                  <li><Link to="/about">About Us</Link></li>
+                  <li><Link to="/careers">Careers</Link></li>
+                  <li><Link to="/blog">Blog</Link></li>
+                  <li><Link to="/partners">Partners</Link></li>
+                  <li><Link to="/contact">Contact</Link></li>
+                </ul>
+              </div>
+
+              <div className="footer-links-column">
+                <h5 className="footer-heading">Support</h5>
+                <ul className="footer-links">
+                  <li><Link to="/help">Help Center</Link></li>
+                  <li><Link to="/safety">Trust & Safety</Link></li>
+                  <li><Link to="/grievances">Grievances</Link></li>
+                  <li><Link to="/report">Report Issue</Link></li>
+                  <li><Link to="/faq">FAQs</Link></li>
+                </ul>
+              </div>
+
+              <div className="footer-links-column">
+                <h5 className="footer-heading">Legal</h5>
+                <ul className="footer-links">
+                  <li><Link to="">Privacy Policy</Link></li>
+                  <li><Link to="">Terms of Service</Link></li>
+                  <li><Link to="">Cookie Policy</Link></li>
+                  <li><Link to="">Fraud Alert</Link></li>
+                  <li><Link to="">Accessibility</Link></li>
+                </ul>
+              </div>
             </div>
-            <div className="col-md-3 text-black" >
-              <p>Help center</p>
-              <p>Summons/Notices</p>
-              <p>Grievances</p>
-              <p >Report issue</p>
-  
+          </div>
+
+          {/* Footer Bottom */}
+          <div className="footer-bottom">
+            <div className="copyright">
+              <p>&copy; {new Date().getFullYear()} PetPulse. All rights reserved.</p>
             </div>
-            <div className="col-md-3 text-black">
-              <p>Privacy policy</p>
-              <p >Terms & conditions</p>
-              <p >Fraud alert</p>
-              <p>Trust & safety</p>
-            </div>
-            {/* <div className="col-md-4">
-              <Card>
-                <Card.Body>
-                  <h5 style={{ color: "black" }}>Apply on the go</h5>
-                  <p>Get real-time job updates on our App</p>
-                  <img src="https://static.naukimg.com/s/0/0/i/new-homepage/android-app_v1.png" alt="" />
-                  <img className='ms-3' src="https://static.naukimg.com/s/0/0/i/new-homepage/ios-app_v1.png" alt="" />
-                </Card.Body>
-              </Card>
-            </div> */}
+          
           </div>
         </div>
-  
-</div>    </>
+      </div>
+
+
+    </>
   )
 }
 

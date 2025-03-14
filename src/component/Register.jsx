@@ -54,7 +54,7 @@ function Register() {
             <div className="col-md-3"></div>
             <div className="col-md-6 d-flex align-items-center justify-content-center">
               <div className='p-4 border border-3 border-black shadow-lg login'style={{borderRadius:'28px 0px',width:'310px'}} >
-              <h4 className='text-black fw-bold text-center '>Login</h4>
+              <h4 className='text-black fw-bold text-center '>Register</h4>
 
                 <div className='position-relative d-flex mt-3' style={{ borderBottom: '2px solid black'}}>
                   <input type="text" placeholder='Username' className='py-2 px-3 w-100 ' style={{ border: 'none',backgroundColor:'transparent' }} onChange={(e)=>setUser({...user,username:e.target.value})} />
