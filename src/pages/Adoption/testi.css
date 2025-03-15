@@ -1,0 +1,165 @@
+/* General container styling */
+.container1 {
+  font-family: 'Arial', sans-serif;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f942;
+  border-radius: 10px;
+  
+}
+
+/* Heading styling */
+.container1 h2 {
+  text-align: center;
+  font-size: 2.8rem;
+  color: #0c6421;
+  margin-bottom: 30px;
+}
+
+/* Reviews section styling */
+.reviews {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 14px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Slider container */
+.slider-container {
+  padding: 20px;
+}
+
+/* Individual review card styling */
+.review {
+  text-align: center;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  margin: 0 5px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.review img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 3px solid #28a745;
+}
+
+.review-content h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.review-content p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.review-content small {
+  display: block;
+  font-size: 0.875rem;
+  color: #777;
+}
+
+/* Dots styling */
+.slick-dots {
+  bottom: -30px;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  color: #28a745;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #28a745;
+}
+
+/* Arrows styling */
+.slick-prev,
+.slick-next {
+  width: 40px;
+  height: 40px;
+  z-index: 1;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-size: 40px;
+  color: #28a745;
+}
+
+.slick-prev {
+  left: -50px;
+}
+
+.slick-next {
+  right: -50px;
+}
+
+/* Add review form styling */
+.add-review {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.add-review h3 {
+  font-size: 2rem;
+  color: #28a745;
+  margin-bottom: 20px;
+}
+
+.form3 {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #28a745;
+  outline: none;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form3 button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form3 button:hover {
+  background-color: #218838;
+}

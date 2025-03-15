@@ -1,0 +1,202 @@
+.pet-management {
+    padding: 2rem;
+}
+
+.pet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.pet-card1 {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.pet-card1:hover {
+    transform: translateY(-5px);
+}
+
+.card-header-section {
+    position: relative;
+    padding: 1.5rem;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.image-container1 {
+    position: relative;
+    height: 200px;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 350px;
+}
+
+.pet-image1 {
+    width: 80%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.status-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.status-badge.available {
+    background: #2ecc71;
+    color: white;
+}
+
+.status-badge.pending {
+    background: #f1c40f;
+    color: white;
+}
+
+.status-badge.adopted {
+    background: #e74c3c;
+    color: white;
+}
+
+.basic-info {
+    margin-top: 1rem;
+}
+
+.pet-name {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.pet-type {
+    background: #3498db;
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+}
+
+.meta-info {
+    display: flex;
+    gap: 1.5rem;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.details-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.detail-group {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.detail-group h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-item span:first-child {
+    color: #7f8c8d;
+    font-weight: 500;
+}
+
+.detail-item.full-width {
+    grid-column: 1 / -1;
+}
+
+.vaccine-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.vaccine-tag {
+    background: #e8f4f8;
+    color: #3498db;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.health-notes {
+    background: #f9ebea;
+    padding: 1rem;
+    border-radius: 8px;
+    color: #e74c3c;
+}
+
+.card-footer {
+    background: white;
+    border-top: 2px solid #f8f9fa;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .pet-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .meta-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .detail-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-header-section {
+        padding: 1rem;
+    }
+    
+    .image-container {
+        height: 200px;
+    }
+}

@@ -48,7 +48,7 @@ function Login() {
               email: "",
               password: ""
             })
-            navigate('/admin')  
+            navigate('/admin-dashboard')  
           }else{
 
             sessionStorage.setItem("existingUser", JSON.stringify(result.data.existingUser))

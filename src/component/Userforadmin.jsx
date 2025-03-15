@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { getbookingUserApi } from '../services/allApi';
@@ -9,19 +9,31 @@ function Userforadmin({ data }) {
 
   const handleClose = () => setShow(false);
   
-  const handleShow = () => {
-    setShow(true);
-    getBookingUser(data.userId);  
-  };
+  const handleShow = () => setShow(true);
 
-  const getBookingUser = async (id) => {
+  const getBookingUser = async () => {
     try {
-      const result = await getbookingUserApi(id);
-      setBookingUser(result.data);  // Store the fetched user data in state
+      // Make sure you're using the correct ID (userId instead of booking ID)
+      const result = await getbookingUserApi(data.userId); // Changed to userId
+      console.log('API Response:', result);
+      
+      if (result.status === 200 && result.data) {
+        setBookingUser(result.data);
+      } else {
+        console.error('No user data found');
+        setBookingUser(null);
+      }
     } catch (error) {
       console.error('Error fetching user data:', error);
+      setBookingUser(null);
     }
   };
+
+  useEffect(() => {
+    if (show) {
+      getBookingUser();
+    }
+  }, [show]); // Fetch data when modal opens
 
   return (
     <>
@@ -43,10 +55,9 @@ function Userforadmin({ data }) {
                   <p><strong>Mobile:</strong> {bookingUser.mobile}</p>
                   <p><strong>Email:</strong> {bookingUser.email}</p>
                   <p><strong>Place:</strong> {bookingUser.place}</p>
-                  
                 </div>
               ) : (
-                <p>Loading user details...</p>  // Placeholder while loading data
+                <p>{show ? 'Loading user details...' : 'No user data available'}</p>
               )}
             </div>
           </div>
@@ -54,9 +65,6 @@ function Userforadmin({ data }) {
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>

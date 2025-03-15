@@ -71,10 +71,10 @@ useEffect(() => {
   <div className="row">
     <div className="col-md-4"></div>
     <div className="col-md-4  ">
-      <h2 className='fw-bold text-black'> {user.username}</h2>
+      <h2 className='fw-bold text-black ms-4'> {user.username}</h2>
       <small className='fw-bolder'> <FontAwesomeIcon icon={faMessage}  className='fa-sm me-3' />
       {user.email}</small> <br />
-      {user.mobile &&(<small>  <FontAwesomeIcon icon={faAddressBook} className='fa-sm me-3' />{user.mobile}</small>)}
+      {user.mobile &&(<small>  <FontAwesomeIcon icon={faAddressBook} className='fa-sm me-3' />{user.mobile}</small>)} <br/>
       {user.place&&(<small><FontAwesomeIcon icon={faMapPin} className='fa-sm me-3' />{user.place}</small>)}
 
     </div>

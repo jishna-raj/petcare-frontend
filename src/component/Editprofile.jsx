@@ -84,6 +84,8 @@ function Editprofile() {
             "Authorization":`Bearer ${token}`
                       }
                       const result =await editUserApi(reqBody,reqHeader)
+                      
+                      
                       if (result.status==200) {
                         alert("edited successfully")
                         setEditResponse(result.data)

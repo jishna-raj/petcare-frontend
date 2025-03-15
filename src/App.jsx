@@ -21,6 +21,10 @@ import Testimonial from './pages/Adoption/Testimonial'
 import AdoptionForm from './pages/Adoption/AdoptionForm'
 import Adminadoption from './pages/Adminaoption/Adminadoption'
 import AdoptionRequest from './pages/Adminaoption/AdoptionRequest'
+import Adoptionprofile from './pages/Adoption/Adoptionprofile'
+import AdminGroom from './pages/Adminaoption/AdminGroom'
+import UserManagement from './pages/Adminaoption/UserManagement'
+import AdoptionManagement from './pages/Adoptionmanagement/adoptionmanagement'
 
 
 
@@ -54,16 +58,37 @@ function App() {
 
       <Route path="/adoption-Form" element={<AdoptionForm />} />
 
-      <Route path='/adoption-request' element={<AdoptionRequest/>}/>
+      <Route path='/adoption-requests' element={<AdoptionRequest/>}/>
+
+      <Route path='/adoption-profile' element = {<Adoptionprofile/>}/>
+
+      <Route path='/admin-dashboard' element={<Adminadoption/>}/>
+
+      <Route path='/usermanagement' element={<UserManagement/>}/>
+      <Route path='/groomingmanagement' element={<AdminGroom/>}/>
+      <Route path='/workermanagement' element={<Admin/>}/>
+
+      <Route path='/admanagement' element={<AdoptionManagement/>}/>
 
 
     </Routes>
     <Footer/>
 
+    
+
+
+
 
 
 
   
+{/* 
+
+
+  <AdminGroom/> */}
+
+
+
 
     
 

@@ -1,0 +1,110 @@
+.admin-groom-container {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.section-title {
+    color: #2c3e50;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.booking-card {
+    background: white;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+}
+
+.booking-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 0.75rem;
+}
+
+.card-title {
+    color: #34495e;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.booking-id {
+    font-size: 0.75rem;
+    color: #95a5a6;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.detail-label {
+    color: #7f8c8d;
+    font-weight: 500;
+    flex: 1;
+}
+
+.detail-value {
+    color: #2c3e50;
+    flex: 2;
+    text-align: right;
+}
+
+.service-badge {
+    background: #e8f4f8;
+    padding: 2px 8px;
+    border-radius: 12px;
+    color: #3498db;
+    font-size: 0.85rem;
+}
+
+.date-badge {
+    background: #f9ebea;
+    padding: 2px 8px;
+    border-radius: 12px;
+    color: #e74c3c;
+    font-size: 0.85rem;
+}
+
+.instruction-text {
+    font-style: italic;
+    color: #7f8c8d;
+}
+
+.confirm-btn {
+    background: #2ecc71;
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.confirm-btn:hover {
+    background: #27ae60;
+    transform: scale(1.05);
+}
+
+.user-admin-wrapper {
+    margin-left: 0.5rem;
+}
+
+.no-bookings {
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.no-bookings i {
+    color: #bdc3c7;
+}

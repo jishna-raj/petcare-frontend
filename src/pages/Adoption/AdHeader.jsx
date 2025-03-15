@@ -1,11 +1,30 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaPaw, FaSignOutAlt, FaCommentDots, FaDog } from 'react-icons/fa'
 import { HiUserCircle } from 'react-icons/hi2';
 
 import './header.css'
 
+
 function AdHeader() {
+
+
+    const [token,settToken] =useState("")
+
+    const navigate = useNavigate()
+
+  const logout =async()=>{
+    sessionStorage.removeItem('adoptionUser')
+    sessionStorage.removeItem('adoptionToken')
+
+    navigate('/')
+  }
+
+  useEffect(()=>{
+    if(sessionStorage.getItem("adoptionToken"))
+      settToken(sessionStorage.getItem("adoptionToken"))
+  },[])
+
     return (
         <>
             <header className="adoption-header">
@@ -16,7 +35,7 @@ function AdHeader() {
                         <span>TheVelvetPaw</span>
                     </div>
 
-                    <div className="nav-links">
+                   {token && <div className="nav-links">
                         <Link to="/home" className="nav-link">Home</Link>
                         <Link to="/pets" className="nav-link">
                             <FaDog className="nav-icon" />
@@ -27,7 +46,7 @@ function AdHeader() {
                             Testimonials
                         </Link>
 
-                        <Link to="/testimonials" className="nav-link">
+                        <Link to="/adoption-profile" className="nav-link">
                             <HiUserCircle
                                 
                                 className="nav-icon"
@@ -35,9 +54,9 @@ function AdHeader() {
                             />
                             profile
                         </Link>
-                    </div>
+                    </div>}
 
-                    <button className="logout-btn">
+                    <button className="logout-btn" onClick={logout}>
                         <FaSignOutAlt />
                         Logout
                     </button>

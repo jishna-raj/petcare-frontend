@@ -1,46 +1,50 @@
-import React from 'react'
+import React from 'react';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
-import './pet.css'
+import './pet.css';
 import { serverUrl } from '../../../services/serverUrl';
 import { useNavigate } from 'react-router-dom';
 
-
 function PetCards({ pet }) {
+    // Hide pending status pets completely
+    if (pet.status === 'pending') {
+        return null;
+    }
+
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const navigate = useNavigate();
 
-    // Function to calculate time since posting
     const getTimeSincePosting = () => {
         const createdAt = new Date(pet.createdAt);
         const now = new Date();
-        const diff = Math.floor((now - createdAt) / 1000); // Difference in seconds
+        const diff = Math.floor((now - createdAt) / 1000);
         
         if (diff < 60) return 'Just now';
-        if (diff < 3600) return `${Math.floor(diff/60)} minutes ago`;
-        if (diff < 86400) return `${Math.floor(diff/3600)} hours ago`;
-        return `${Math.floor(diff/86400)} days ago`;
+        if (diff < 3600) return `${Math.floor(diff/60)}m ago`;
+        if (diff < 86400) return `${Math.floor(diff/3600)}h ago`;
+        return `${Math.floor(diff/86400)}d ago`;
     };
 
-
     const handleShowInterest = () => {
+        // Block action if pet is adopted
+        if (pet.status === 'adopted') return;
+
         const userData = JSON.parse(sessionStorage.getItem('adoptionUser'));
         if (!userData) {
-          alert('Please login to show interest');
-          return;
+            alert('Please login to show interest');
+            return;
         }
         
         navigate('/adoption-form', {
-          state: {
-            pet,
-            user: userData
-          }
+            state: {
+                pet,
+                user: userData
+            }
         });
-      };
-    
+    };
 
     return (
         <>
@@ -52,27 +56,46 @@ function PetCards({ pet }) {
                             alt={pet.name} 
                             className="child-image" 
                         />
+                        {/* Adoption status badge */}
+                        {pet.status === 'adopted' && (
+                            <div className="status-badge adopted">
+                                Adopted
+                            </div>
+                        )}
                     </button>
+                    
                     <Card.Body className="card-body">
                         <Card.Title className="pet-name">{pet.name}</Card.Title>
+                        
                         <div className="pet-details">
                             <p><span>Type:</span> {pet.petType}</p>
-                            <p><span>Age:</span> {pet.ageYears} years {pet.ageMonths} months</p>
-                            <p><span>Breed:</span> {pet.breed}</p>
+                            <p><span>Age:</span> {pet.ageYears}y {pet.ageMonths}m</p>
+                            <p><span>Breed:</span> {pet.breed || 'Mixed'}</p>
                             <p><span>Location:</span> {pet.location}</p>
                             <p><span>Posted:</span> {getTimeSincePosting()}</p>
                         </div>
-                        <button variant="primary" className="interest-btn" onClick={handleShowInterest}>
-                            Show Interest
+
+                        {/* Conditional Show Interest button */}
+                        <button 
+                            className={`interest-btn ${pet.status === 'adopted' ? 'disabled' : ''}`}
+                            onClick={handleShowInterest}
+                            disabled={pet.status === 'adopted'}
+                            aria-label={pet.status === 'adopted' ? 'This pet has been adopted' : 'Show interest in adopting'}
+                        >
+                            {pet.status === 'adopted' ? 'Already Adopted' : 'Show Interest'}
                         </button>
                     </Card.Body>
                 </Card>
             </div>
 
-            <Modal show={show} onHide={handleClose} size="lg">
+            {/* Pet Details Modal */}
+            <Modal show={show} onHide={handleClose} size="lg" centered>
                 <Modal.Header closeButton className="modal-header">
-                    <Modal.Title className="modal-title">{pet.name}'s Profile</Modal.Title>
+                    <Modal.Title className="modal-title">
+                        {pet.name}'s Full Profile
+                    </Modal.Title>
                 </Modal.Header>
+                
                 <Modal.Body className="modal-body">
                     <div className="pet-details-container">
                         <div className="pet-image-gallery">
@@ -81,92 +104,61 @@ function PetCards({ pet }) {
                                 alt={pet.name}
                                 className="main-pet-image"
                             />
+                            <div className={`status-indicator ${pet.status}`}>
+                                Status: {pet.status}
+                            </div>
                         </div>
 
                         <div className="details-sections">
-                            {/* Basic Info */}
+                            {/* Basic Information Section */}
                             <div className="detail-section">
-                                <h4 className="section-header">
-                                    <i className="fas fa-paw"></i> Basic Information
-                                </h4>
+                                <h4 className="section-header">Basic Information</h4>
                                 <div className="detail-grid">
                                     <div className="detail-item">
-                                        <span className="detail-label">Name:</span>
-                                        <span className="detail-value">{pet.name}</span>
+                                        <span>Gender:</span>
+                                        <strong>{pet.gender}</strong>
                                     </div>
                                     <div className="detail-item">
-                                        <span className="detail-label">Age:</span>
-                                        <span className="detail-value">{pet.ageYears} years {pet.ageMonths} months</span>
+                                        <span>Size:</span>
+                                        <strong>{pet.size}</strong>
                                     </div>
                                     <div className="detail-item">
-                                        <span className="detail-label">Breed:</span>
-                                        <span className="detail-value">{pet.breed}</span>
-                                    </div>
-                                    <div className="detail-item">
-                                        <span className="detail-label">Gender:</span>
-                                        <span className="detail-value">{pet.gender}</span>
+                                        <span>Coat Type:</span>
+                                        <strong>{pet.coatType || 'N/A'}</strong>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Physical Characteristics */}
+                            {/* Health Information Section */}
                             <div className="detail-section">
-                                <h4 className="section-header">
-                                    <i className="fas fa-dna"></i> Physical Traits
-                                </h4>
-                                <div className="detail-grid">
-                                    <div className="detail-item">
-                                        <span className="detail-label">Size:</span>
-                                        <span className="detail-value">{pet.size}</span>
-                                    </div>
-                                    <div className="detail-item">
-                                        <span className="detail-label">Coat Type:</span>
-                                        <span className="detail-value">{pet.coatType}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Health Information */}
-                            <div className="detail-section">
-                                <h4 className="section-header">
-                                    <i className="fas fa-heartbeat"></i> Health Information
-                                </h4>
+                                <h4 className="section-header">Health Information</h4>
                                 <div className="health-details">
-                                    <div className="vaccination-card">
-                                        <h5>Vaccinations</h5>
-                                        <div className="vaccine-list">
-                                            {pet.vaccines.map((vaccine, index) => (
-                                                <span key={index} className="vaccine-tag">
-                                                    <i className="fas fa-syringe"></i> {vaccine}
-                                                </span>
-                                            ))}
+                                    <div className="vaccination-info">
+                                        <h5>Vaccinations:</h5>
+                                        <div className="vaccine-tags">
+                                            {pet.vaccines?.length > 0 ? (
+                                                pet.vaccines.map((vaccine, index) => (
+                                                    <span key={index} className="vaccine-tag">
+                                                        {vaccine}
+                                                    </span>
+                                                ))
+                                            ) : 'No vaccinations recorded'}
                                         </div>
                                     </div>
                                     <div className="medical-notes">
-                                        <p><strong>Health Notes:</strong> {pet.healthNotes}</p>
-                                        <p><strong>Medication:</strong> {pet.medicationInfo}</p>
+                                        <p><strong>Health Notes:</strong> {pet.healthNotes || 'N/A'}</p>
+                                        <p><strong>Medications:</strong> {pet.medicationInfo || 'N/A'}</p>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Owner Information */}
+                            {/* Owner Information Section */}
                             <div className="detail-section">
-                                <h4 className="section-header">
-                                    <i className="fas fa-user"></i> Owner Information
-                                </h4>
-                                <div className="detail-grid">
-                                    <div className="detail-item">
-                                        <span className="detail-label">Contact Email:</span>
-                                        <span className="detail-value">{pet.contactEmail}</span>
-                                    </div>
-                                    <div className="detail-item">
-                                        <span className="detail-label">Contact Phone:</span>
-                                        <span className="detail-value">{pet.contactPhone}</span>
-                                    </div>
-                                    <div className="detail-item">
-                                        <span className="detail-label">Rehoming Reason:</span>
-                                        <span className="detail-value">{pet.justification}</span>
-                                    </div>
+                                <h4 className="section-header">Owner Information</h4>
+                                <div className="contact-details">
+                                    <p><strong>Email:</strong> {pet.contactEmail}</p>
+                                    <p><strong>Phone:</strong> {pet.contactPhone}</p>
+                                    <p><strong>Rehoming Reason:</strong> {pet.justification}</p>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +166,7 @@ function PetCards({ pet }) {
                 </Modal.Body>
             </Modal>
         </>
-    )
+    );
 }
 
-export default PetCards
+export default PetCards;

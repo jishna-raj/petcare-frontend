@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './adoption1.css';
+import './sample.css';
 import { Link } from 'react-router-dom';
 import AdHeader from './AdHeader';
 import { toast, ToastContainer } from 'react-toastify';
