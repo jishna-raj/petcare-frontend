@@ -4,6 +4,9 @@ import Modal from 'react-bootstrap/Modal';
 import { getbookingUserApi } from '../services/allApi';
 
 function Userforadmin({ data }) {
+
+  console.log(data.userId._id);
+  
   const [show, setShow] = useState(false);
   const [bookingUser, setBookingUser] = useState(null); 
 
@@ -14,7 +17,7 @@ function Userforadmin({ data }) {
   const getBookingUser = async () => {
     try {
       // Make sure you're using the correct ID (userId instead of booking ID)
-      const result = await getbookingUserApi(data.userId); // Changed to userId
+      const result = await getbookingUserApi(data.userId._id); // Changed to userId
       console.log('API Response:', result);
       
       if (result.status === 200 && result.data) {

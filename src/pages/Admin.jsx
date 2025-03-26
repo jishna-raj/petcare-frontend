@@ -1,174 +1,110 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { getAllGroomerApi, updatestatusGroomerApi } from '../services/allApi';
+import './Admin.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-    faSearch, 
-    faTrash, 
-    faMapMarkerAlt, 
-    faIdCard, 
-    faPhone 
-} from '@fortawesome/free-solid-svg-icons';
-import Addemployee from '../component/Addemployee';
-import { getEmployeeApi, removeEmployeeApi } from '../services/allApi';
-import { serverUrl } from '../services/serverUrl';
-import { addEmployeeResponseContext } from '../context/Contextshare';
-import Swal from 'sweetalert2';
-import './employee.css';
+import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+
 
 function Admin() {
-    const [employee, setEmployee] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    const { addEmployee } = useContext(addEmployeeResponseContext);
-    const navigate = useNavigate();
+    const [employees, setEmployees] = useState([]); // State to store employees' data
 
-    const getEmployee = async () => {
-        const token = sessionStorage.getItem("token");
-        const reqHeader = {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        };
-        const result = await getEmployeeApi(reqHeader);
-        if (result.data) setEmployee(result.data);
-    };
+    // Fetch all employees' data
+    useEffect(() => {
+        fetchEmployees();
+    }, []);
 
-    const logout = () => {
-        sessionStorage.removeItem('existingUser');
-        sessionStorage.removeItem('token');
-        navigate('/');
-    };
-
-    const removeEmployee = async (id) => {
-        const result = await removeEmployeeApi(id);
-        if (result.status === 200) {
-            await getEmployee();
-            Swal.fire({
-                title: 'Deleted!',
-                text: 'Employee removed successfully',
-                icon: 'success',
-                timer: 1500
-            });
+    const fetchEmployees = async () => {
+        try {
+            const response = await getAllGroomerApi(); // Fetch all groomers
+            console.log(response);
+            setEmployees(response.data);
+        } catch (error) {
+            console.error('Error fetching employees:', error);
+            toast.error('Failed to fetch employees');
         }
     };
 
-    const filteredEmployees = employee.filter(emp => 
-        emp.name?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // Handle status update
+    const handleStatusUpdate = async (id, newStatus) => {
+        try {
+            // Call the API to update the status
+            const response = await updatestatusGroomerApi(id, { status: newStatus });
 
-    useEffect(() => { getEmployee(); }, [addEmployee]);
+            if (response.status === 200) {
+                toast.success('Status updated successfully');
+                // Update the local state
+                setEmployees((prevEmployees) =>
+                    prevEmployees.map((employee) =>
+                        employee._id === id ? { ...employee, status: newStatus } : employee
+                    )
+                );
+            } else {
+                toast.error('Failed to update status');
+            }
+        } catch (error) {
+            console.error('Error updating status:', error);
+            toast.error('Failed to update status');
+        }
+    };
 
     return (
-        <div className="admin-container">
-            <Navbar expand="lg" className="admin-navbar">
-                <Container>
-                    <Navbar.Brand>
-                        <div className="logo-container">
-                            <img 
-                                src="animal1.png" 
-                                alt="Petpulse Logo" 
-                                className="logo-img"
-                            />
-                            <h3 className="text-dark fw-bold mb-0">PetPulse</h3>
-                        </div>
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="ms-auto">
-                            <Link to="/" className="nav-link">
-                                <button className="btn text-dark">Home</button>
-                            </Link>
-                            <button 
-                                className="btn text-dark"
-                                onClick={logout}
-                            >
-                                Logout
-                            </button>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-
-            <div className="container">
-                <div className="search-container">
-                    <div className="position-relative">
-                        <input
-                            type="text"
-                            placeholder="Search employee..."
-                            className="search-input p-3"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                        <FontAwesomeIcon 
-                            icon={faSearch} 
-                            className="search-icon" style={{marginLeft:"520px"}}
-                        />
+        <>
+            <div className="employee-container">
+                <div className='d-flex justify-content-between'>
+                    <h2 className="admin-title">Groomer Requests</h2>
+    
+                    <div>
+                        <Link to={'/groomer'}><button className='btn btn-success me-3'>Groomers</button></Link>
+                        <Link to={'/admin-dashboard'}><button className='btn btn-secondary'><FontAwesomeIcon icon={faRotateLeft} /></button></Link>
                     </div>
                 </div>
-
-                <div className='row'>
-                  <div className="col-md-5"></div>
-                  <div className="col-md-2">
-                  <div className="d-flex justify-content-center mb-4">
-                      <Addemployee />
-                  </div>
-                  </div>
-                  <div className="col-md-5"></div>
-                  
-                </div>
-
-                <div className="employee-grid">
-                    {filteredEmployees.length > 0 ? (
-                        filteredEmployees.map((item) => (
-                            <div key={item._id} className="employee-card">
-                                <div className="employee-header">
-                                    <img
-                                        src={`${serverUrl}/uploads/${item.img}`}
-                                        alt={item.name}
-                                        className="employee-avatar"
-                                        onError={(e) => {
-                                            e.target.onerror = null;
-                                            e.target.src = `${serverUrl}/uploads/default-profile.png`;
-                                        }}
-                                    />
-                                    <div className="employee-info">
-                                        <h4 className="employee-name">{item.name}</h4>
-                                        <p className="employee-designation">{item.designation}</p>
-                                    </div>
-                                </div>
-
-                                <div className="employee-details">
-                                    <div className="detail-item">
-                                        <FontAwesomeIcon icon={faMapMarkerAlt} className="detail-icon" />
-                                        <span>{item.place || 'Not specified'}</span>
-                                    </div>
-                                    <div className="detail-item">
-                                        <FontAwesomeIcon icon={faIdCard} className="detail-icon" />
-                                        <span>{item.license || 'No license'}</span>
-                                    </div>
-                                    <div className="detail-item">
-                                        <FontAwesomeIcon icon={faPhone} className="detail-icon" />
-                                        <span>{item.mobile || 'No contact'}</span>
-                                    </div>
-                                    <div className="text-end mt-3">
-                                        <button 
-                                            className="delete-btn"
-                                            onClick={() => removeEmployee(item._id)}
-                                        >
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))
-                    ) : (
-                        <div className="empty-state">
-                            <h4>{employee.length ? 'No matching employees found' : 'No Employees Found'}</h4>
-                            <p>{employee.length ? 'Try different search terms' : 'Start by adding new employees'}</p>
-                        </div>
-                    )}
-                </div>
+                <table className="employee-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Experience</th>
+                            <th>License</th>
+                            <th>Certifications</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {employees.map((employee) => (
+                            <tr key={employee._id}>
+                                <td>{employee.name}</td>
+                                <td>{employee.email}</td>
+                                <td>{employee.phone}</td>
+                                <td>{employee.address}</td>
+                                <td>{employee.experience} years</td>
+                                <td>{employee.license}</td>
+                                <td>{employee.certification.join(', ')}</td>
+                                <td>{employee.status}</td>
+                                <td>
+                                    <select
+                                        value={employee.status}
+                                        className="status-select"
+                                        onChange={(e) => handleStatusUpdate(employee._id, e.target.value)}
+                                    >
+                                        <option value="pending">Pending</option>
+                                        <option value="accepted">Accepted</option>
+                                        <option value="rejected">Rejected</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
-        </div>
+
+            <ToastContainer autoClose={2000} theme="colored" position="top-center" />
+        </>
     );
 }
 

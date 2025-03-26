@@ -25,6 +25,12 @@ import Adoptionprofile from './pages/Adoption/Adoptionprofile'
 import AdminGroom from './pages/Adminaoption/AdminGroom'
 import UserManagement from './pages/Adminaoption/UserManagement'
 import AdoptionManagement from './pages/Adoptionmanagement/adoptionmanagement'
+import GroomerReg from './pages/groomer/GroomerReg'
+import GroomerLog from './pages/groomer/GroomerLog'
+import GroomerDashboard from './pages/groomer/GroomerDashboard'
+import Groomer from './pages/groomer/Groomer'
+import GroomerReview from './pages/groomer/GroomerReview'
+import GroomerTestimonialView from './pages/groomer/GroomerTestimonialView'
 
 
 
@@ -70,9 +76,20 @@ function App() {
 
       <Route path='/admanagement' element={<AdoptionManagement/>}/>
 
+      <Route path='/groomer-reg' element={<GroomerReg/>}/>
+      <Route path='/groomer-log' element={<GroomerLog/>}/>
+      <Route path='/groomer-dashboard/:id' element={<GroomerDashboard/>}/>
+      <Route path='/groomer' element={<Groomer/>}/>
+      <Route path='/review' element={<GroomerReview/>}/>
+
+      <Route path='/groomer-review' element={<GroomerTestimonialView/>}/>
+
 
     </Routes>
     <Footer/>
+
+    
+
 
     
 

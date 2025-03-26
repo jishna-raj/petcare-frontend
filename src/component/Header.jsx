@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import logo from '../assets/logo.png'
 
 
 
@@ -21,12 +22,12 @@ function Header() {
 
   
   return (
-    <div className='container p-3 shadow-sm  '>
+    <div className='container-fluid p-1  shadow-sm'>
     <Navbar expand="lg" className='nav'>
   <Container>
     <Navbar.Brand href="#home"> 
         <div className='d-flex'>
-            <img src="animal1.png" className='' width={'40px'} height={'40px'} alt=""  />
+            <img src={logo} className='' width={'40px'} height={'40px'} alt=""  />
                 <h3  className='text-black fw-bolder mt-2 ms-1'>TheVelvetPaw</h3>
         </div>
         </Navbar.Brand>
@@ -38,7 +39,10 @@ function Header() {
         <Link to={'/login'} style={{textDecoration:'none'}}><Nav.Link href="#link" className='text-black'>Login</Nav.Link></Link>
        <Link to={'/register'} style={{textDecoration:'none'}}> <Nav.Link href="#Auth"  className='text-black'>Register</Nav.Link></Link>
 
-       <Link to={'/adoption'} style={{textDecoration:'none'}}> <button className='btn btn-outline-success'>Get a Pet</button></Link>
+      <div className='ms-5'>
+         <Link to={'/adoption'} style={{textDecoration:'none'}}> <button className='btn btn-outline-success ms-5'>Get a Pet</button></Link>
+         <Link to={'/groomer-reg'} style={{textDecoration:'none'}}> <button className='btn btn-outline-danger ms-3'>groomer</button></Link>
+      </div>
 
 
 

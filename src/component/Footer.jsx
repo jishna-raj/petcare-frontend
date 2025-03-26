@@ -5,6 +5,8 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import './footer.css'
 
+import logo from '../assets/logo.png'
+
 function Footer() {
 
   return (
@@ -19,7 +21,7 @@ function Footer() {
                 <div className="brand-container">
                   <img
                     alt="PetPulse Logo"
-                    src="./animal1.png"
+                    src={logo}
                     className="brand-logo"
                   />
                   <h2 className="brand-text">TheVelvetPaw</h2>
