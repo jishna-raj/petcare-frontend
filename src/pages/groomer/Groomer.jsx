@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Groomer.css'; // Import the CSS file for styling
 import { getAllGroomerApi } from '../../services/allApi';
 import { serverUrl } from '../../services/serverUrl';
+import { Link } from 'react-router-dom';
 
 function Groomer() {
     const [groomers, setGroomers] = useState([]); // State to store groomers' data
@@ -30,7 +31,7 @@ function Groomer() {
     return (
         <>
             <div className="groomer-container">
-                <h1 className="groomer-title">All Groomers</h1>
+                <Link to={'/workermanagement'} style={{textDecoration:"none"}}><h1 className="groomer-title">All Groomers</h1></Link>
 
                 <div className="row">
                     {groomers.map((groomer) => (

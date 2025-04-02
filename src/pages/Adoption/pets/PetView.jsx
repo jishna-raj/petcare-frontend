@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import PetCards from './PetCards'
 import './petview.css'
 import { getAllPetApi } from '../../../services/allApi'
+import { Link } from 'react-router-dom'
+import { FaSignOutAlt } from 'react-icons/fa'
+
 
 
 function PetView() {
@@ -69,11 +72,16 @@ function PetView() {
         </div>
         
         <div className="container">
-          <h1 className="page-title">
-            Discover Your Perfect 
-            <span className="highlight"> Companion</span>
-          </h1>
-          
+        
+            <h1 className="page-title">
+            
+              Discover Your Perfect 
+              <span className="highlight"> Companion</span>
+            </h1>
+
+
+                     
+         
           <div className="search-bar-container1">
             <div className="input-group1">
               <i className="fas fa-search search-icon1"></i>
@@ -167,6 +175,8 @@ function PetView() {
           </div>
         )}
       </div>
+
+      <Link to={"/service"}> <button className='btn text-secondary fw-bold' style={{marginLeft:'1200px'}} >back</button></Link>
     </div>
   )
 }

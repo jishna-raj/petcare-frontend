@@ -41,7 +41,7 @@ function Header() {
 
       <div className='ms-5'>
          <Link to={'/adoption'} style={{textDecoration:'none'}}> <button className='btn btn-outline-success ms-5'>Get a Pet</button></Link>
-         <Link to={'/groomer-reg'} style={{textDecoration:'none'}}> <button className='btn btn-outline-danger ms-3'>groomer</button></Link>
+         <Link to={'/groomer-log'} style={{textDecoration:'none'}}> <button className='btn btn-outline-danger ms-3'>groomer</button></Link>
       </div>
 
 

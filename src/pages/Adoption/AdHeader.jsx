@@ -36,7 +36,7 @@ function AdHeader() {
                     </div>
 
                    {token && <div className="nav-links">
-                        <Link to="/home" className="nav-link">Home</Link>
+                        <Link to="/service" className="nav-link">Home</Link>
                         <Link to="/pets" className="nav-link">
                             <FaDog className="nav-icon" />
                             Pets

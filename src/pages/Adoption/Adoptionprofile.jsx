@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useEffect, useState } from 'react';
 import Adeditprofile from './Adeditprofile';
 import AdoptionUserDetails from './AdoptionUserDetails';
-import { getadoptionuserdataApi } from '../../services/allApi';
+import { getadoptionuserdataApi, getRequestsByUserApi } from '../../services/allApi';
 import { serverUrl } from '../../services/serverUrl';
 import { editResponseContext } from '../../context/Contextshare';
 
 function Adoptionprofile() {
   const [user, setUser] = useState({});
   const [notifications, setNotifications] = useState([]);
-  const { editResponse } = useContext(editResponseContext); // Context for edit response
+  const { editResponse } = useContext(editResponseContext);
 
   // Fetch user data
   const getUserData = async () => {
@@ -25,29 +25,52 @@ function Adoptionprofile() {
     }
   };
 
-  // Fetch adoption notifications (if applicable)
+  // Generate notification messages
+  const getNotificationMessage = (request) => {
+    const visitDate = new Date(request.updatedAt);
+    visitDate.setDate(visitDate.getDate() + 3);
+    
+    return request.status === 'approved' 
+      ? `Thank you for choosing us. Your adoption request has been approved, and we will reach out to you at your home on ${visitDate.toLocaleDateString()} . For further details, please contact us at 9856346789`
+      : 'Unfortunately we rejected your request. Please contact us at 9856346789';
+  };
+
+  // Fetch and process adoption notifications
   const getAdoptionNotifications = async () => {
-    const token = sessionStorage.getItem('adoptionToken');
-    const reqHeader = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    // Replace with your API call for adoption notifications
-    // const result = await getAdoptionNotificationsApi(reqHeader);
-    // if (result.status === 200) {
-    //   setNotifications(result.data);
-    // }
+    try {
+      const sessionUser = sessionStorage.getItem('adoptionUser');
+      if (!sessionUser) return;
+      
+      const userData = JSON.parse(sessionUser);
+      const userId = userData?._id;
+      if (!userId) return;
+
+      const response = await getRequestsByUserApi(userId);
+      if (response.data.status === 'success') {
+        const processedNotifications = response.data.data.requests
+          .filter(request => ['approved', 'rejected'].includes(request.status))
+          .map(request => ({
+            id: request._id,
+            date: new Date(request.updatedAt).toLocaleDateString(),
+            status: request.status,
+            message: getNotificationMessage(request) // Fixed this reference
+          }));
+        setNotifications(processedNotifications);
+      }
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    }
   };
 
   useEffect(() => {
     getUserData();
     getAdoptionNotifications();
-  }, [editResponse]); // Re-fetch data when editResponse changes
+  }, [editResponse]);
 
   return (
     <>
       {/* Cover Image and Profile Picture */}
-      <div className="border cover" style={{ height: '250px', position: 'relative' }} >
+      <div className="border cover" style={{ height: '250px', position: 'relative' }}>
         <img
           src={user?.img ? `${serverUrl}/uploads/${user.img}` : 'https://cdn-icons-png.flaticon.com/512/1144/1144760.png'}
           alt="Profile"
@@ -64,8 +87,7 @@ function Adoptionprofile() {
             <small className="fw-bolder">
               <FontAwesomeIcon icon={faMessage} className="fa-sm me-3" />
               {user.email}
-            </small>{' '}
-            <br />
+            </small><br />
             {user.mobile && (
               <small>
                 <FontAwesomeIcon icon={faAddressBook} className="fa-sm me-3" />
@@ -94,11 +116,14 @@ function Adoptionprofile() {
               <h5 className="text-center fw-bold mb-4">Adoption Notifications</h5>
               <ol className="pl-3">
                 {notifications.length > 0 ? (
-                  notifications.map((item, index) => (
-                    <li key={index} className="mb-3">
-                      Thank you for adopting a pet! <br />
-                      <strong>Date:</strong> {item.date} <br />
-                      <strong>Contact us:</strong> {item.contact}
+                  notifications.map((notification) => (
+                    <li key={notification.id} className="mb-3 text-success">
+                      {notification.message}
+                      <br />
+                      <strong>Status Updated: {notification.date}</strong>
+                      {notification.status === 'rejected' && (
+                        <><br /><strong>Contact:</strong> 9856346789</>
+                      )}
                     </li>
                   ))
                 ) : (

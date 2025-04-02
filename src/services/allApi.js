@@ -112,11 +112,12 @@ export const getadoptionuserdataApi = async (reqHeader) => {
 }
 
 
-/* export const getaAdoptionUserApi = async(id)=>{
+export const deleteAdoptionUserApi = async (id) => {
+    
+    return await commonApi('DELETE', `${serverUrl}/delete-adoptionuser/${id}`);
+  };
 
 
-    return await commonApi('GET',`${serverUrl}/get-a-adoptionuser/${id}`)
-} */
 //edit profile
 
 export const editadoptionUserApi = async (reqBody, reqHeader) => {
@@ -189,8 +190,8 @@ export const getAllRequestsApi = async () => {
 }
 
 
-export const getRequestsByUserApi = async (userId) => {
-    return await commonApi('GET', `${serverUrl}/adoption-requests-user/${userId}`);
+export const getRequestsByUserApi = async (id) => {
+    return await commonApi('GET', `${serverUrl}/get-adoptionuserRequest/${id}`);
   }
 
 

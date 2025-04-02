@@ -254,18 +254,6 @@ function Landing() {
 
 
 
-        <section className="newsletter-cta">
-          <div className="cta-content">
-            <h2>Stay Pawsitive!</h2>
-            <p>Subscribe to get updates on new arrivals and adoption tips</p>
-            <form className="newsletter-form">
-              <input type="email" placeholder="Enter your email" />
-              <button type="submit" className="btn btn-success">Subscribe</button>
-            </form>
-          </div>
-        </section>
-
-
       </div>
 
 

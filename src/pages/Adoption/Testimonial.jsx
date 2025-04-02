@@ -6,6 +6,8 @@ import { getAllTestimonialsApi, addTestimonialApi, getAadoptionUseridApi } from 
 import './testi.css';
 import { serverUrl } from '../../services/serverUrl';
 import Swal from 'sweetalert2';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 function Testimonial() {
   const [testimonials, setTestimonials] = useState([]);
@@ -29,10 +31,10 @@ function Testimonial() {
           const parsedUser = JSON.parse(sessionUser);
           const userResponse = await getAadoptionUseridApi(parsedUser._id);
           console.log(userResponse);
-          
-          if (userResponse.status>=200 && userResponse.status<300){
+
+          if (userResponse.status >= 200 && userResponse.status < 300) {
             setUserDetails(userResponse.data);
-          } 
+          }
         }
       } catch (err) {
         setError('Failed to load testimonials');
@@ -64,19 +66,19 @@ function Testimonial() {
       };
 
       const addResponse = await addTestimonialApi(testimonialData);
-      
-      if (addResponse.status>=200 && addResponse.status<300) {
+
+      if (addResponse.status >= 200 && addResponse.status < 300) {
         // Refresh testimonials list
         const { data: newData } = await getAllTestimonialsApi();
         setTestimonials(newData.data);
         setFormData({ review: '' });
 
-         Swal.fire({
-             title:'wow....',
-             text:'Review submitted successfully!',
-             icon:'success'
-           })
-     
+        Swal.fire({
+          title: 'wow....',
+          text: 'Review submitted successfully!',
+          icon: 'success'
+        })
+
       } else {
         setError(data.message || 'Failed to submit review');
       }
@@ -90,7 +92,7 @@ function Testimonial() {
 
 
   console.log(testimonials);
-  
+
 
   // Carousel settings
   const settings = {
@@ -120,7 +122,16 @@ function Testimonial() {
 
   return (
     <div className="container1">
-      <h2 className="mt-5 text-success text-center">Customer Reviews & Testimonials</h2>
+<div className='d-flex justify-content-between'>
+        <h2 className="mt-5 text-success text-center">Customer Reviews & Testimonials</h2>
+  
+       <Link to={'/service'}>
+          <button className="btn">
+            <FaSignOutAlt />
+            back
+          </button>
+       </Link>
+</div>
 
       <div className="reviews p-5">
         <div className="slider-container">
@@ -128,9 +139,9 @@ function Testimonial() {
             <Slider {...settings}>
               {testimonials.map((testimonial) => (
                 <div className="review" key={testimonial._id}>
-                  <img 
-                    src={`${serverUrl}/uploads/${testimonial.img}`} 
-                    alt={testimonial.user} 
+                  <img
+                    src={`${serverUrl}/uploads/${testimonial.img}`}
+                    alt={testimonial.user}
                     className="review-img"
                   />
                   <div className="review-content">
@@ -166,8 +177,8 @@ function Testimonial() {
               <small>{formData.review.length}/500 characters</small>
             </div>
             <div className="text-center mt-3">
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="btn btn-success"
                 disabled={submitting || !formData.review.trim()}
               >

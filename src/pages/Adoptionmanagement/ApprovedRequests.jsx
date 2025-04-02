@@ -14,6 +14,8 @@ function ApprovedRequests() {
         const fetchRequests = async () => {
             try {
                 const response = await getAllRequestsApi();
+                console.log(response);
+                
                 if (response.data?.success) {
                     const pendingRequests = response.data.data.filter(
                         request => request.status === 'pending'
@@ -37,12 +39,12 @@ function ApprovedRequests() {
                 alert('Request not found');
                 return;
             }
-
+    
             // Update request status in backend
             const response = await updateRequestStatusApi(requestId, { status });
             
             if (response.data?.success) {
-                // Create appropriate notification
+                // Create appropriate notification for the current request
                 await addNotificationApi({
                     user: request.user._id,
                     adoptionRequest: requestId,
@@ -52,9 +54,39 @@ function ApprovedRequests() {
                         ? `🎉 Congratulations! Your adoption request for ${request.pet?.name} has been approved!`
                         : `😞 We're sorry, your adoption request for ${request.pet?.name} has been rejected.`
                 });
-
-                // Remove request from UI
-                setRequests(prev => prev.filter(r => r._id !== requestId));
+    
+                // If approved, reject all other pending requests for the same pet
+                if (status === 'approved') {
+                    const petId = request.pet._id;
+                    // Find all other pending requests for the same pet
+                    const otherRequests = requests.filter(r => 
+                        r.pet._id === petId && 
+                        r._id !== requestId && 
+                        r.status === 'pending'
+                    );
+    
+                    // Update each of the other requests to 'rejected' and create notifications
+                    const updatePromises = otherRequests.map(async (otherRequest) => {
+                        await updateRequestStatusApi(otherRequest._id, { status: 'rejected' });
+                        await addNotificationApi({
+                            user: otherRequest.user._id,
+                            adoptionRequest: otherRequest._id,
+                            pet: otherRequest.pet._id,
+                            type: 'rejected_adoption',
+                            message: `😞 We're sorry, your adoption request for ${otherRequest.pet?.name} has been rejected because another request was approved.`
+                        });
+                    });
+    
+                    // Wait for all updates to complete
+                    await Promise.all(updatePromises);
+    
+                    // Remove all affected requests (approved + rejected) from the UI
+                    const idsToRemove = [requestId, ...otherRequests.map(r => r._id)];
+                    setRequests(prev => prev.filter(r => !idsToRemove.includes(r._id)));
+                } else {
+                    // If rejected, just remove the current request
+                    setRequests(prev => prev.filter(r => r._id !== requestId));
+                }
             }
         } catch (error) {
             alert(error.response?.data?.message || `Failed to ${status} request`);

@@ -20,7 +20,6 @@ import Contact from './pages/contact/Contact'
 import Testimonial from './pages/Adoption/Testimonial'
 import AdoptionForm from './pages/Adoption/AdoptionForm'
 import Adminadoption from './pages/Adminaoption/Adminadoption'
-import AdoptionRequest from './pages/Adminaoption/AdoptionRequest'
 import Adoptionprofile from './pages/Adoption/Adoptionprofile'
 import AdminGroom from './pages/Adminaoption/AdminGroom'
 import UserManagement from './pages/Adminaoption/UserManagement'
@@ -64,7 +63,7 @@ function App() {
 
       <Route path="/adoption-Form" element={<AdoptionForm />} />
 
-      <Route path='/adoption-requests' element={<AdoptionRequest/>}/>
+{/*       <Route path='/adoption-requests' element={<AdoptionRequest/>}/> */}
 
       <Route path='/adoption-profile' element = {<Adoptionprofile/>}/>
 

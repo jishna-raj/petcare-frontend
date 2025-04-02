@@ -1,8 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify';
+
 import { addpetAdminApi} from '../../services/allApi';
-import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-bootstrap';
 
 
@@ -121,7 +120,7 @@ function PetAdding() {
                 console.log(response);
 
                 if (response.status >= 200 && response.status < 300) {
-                    toast.success('Pet added successfully');
+                    alert('Pet added successfully');
                     setFormData({
                         name: '',
                         ageYears: '',
@@ -416,7 +415,6 @@ function PetAdding() {
 
                 <div className="col-md-2"></div>
 
-                <ToastContainer autoClose={2000} theme="colored" position="top-center" />
             </div>
 
 

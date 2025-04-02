@@ -16,9 +16,6 @@ function Home() {
    <Header/>
 <div className='container mb-5'>
             <h3 className=" fw-bold text-center  text-black mt-4 ">find your services</h3>
-            <button type="button" class="btn btn-primary  " style={{position:'fixed'}}>
-  Messages <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
-</button>
 
        <div className=' d-flex align-items-center justify-content-center'>
         <div className='position-relative d-flex  mt-3 border border-1 rounded-pill w-50'>

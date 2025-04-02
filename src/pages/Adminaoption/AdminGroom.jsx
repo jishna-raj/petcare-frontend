@@ -4,6 +4,7 @@ import { getAllBookingApi } from '../../services/allApi';
 
 import Userforadmin from '../../component/Userforadmin';
 import './AdminGroom.css';
+import { Link } from 'react-router-dom';
 
 
 
@@ -35,7 +36,7 @@ function AdminGroom() {
 
     return (
         <div className="admin-groom-container p-5">
-            <h3 className="mb-4 text-center section-title">Grooming Bookings</h3>
+            <Link to={'/admin-dashboard'} style={{textDecoration:"none"}}><h3 className="mb-4 text-center section-title">Grooming Bookings</h3></Link>
             <div className="row w-100">
                 {booking?.length > 0 ?
                     booking.map((item, index) => {

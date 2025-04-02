@@ -7,6 +7,9 @@ import { serverUrl } from '../../../services/serverUrl';
 import { useNavigate } from 'react-router-dom';
 
 function PetCards({ pet }) {
+
+    console.log(pet);
+
     // Hide pending status pets completely
     if (pet.status === 'pending') {
         return null;
@@ -21,11 +24,11 @@ function PetCards({ pet }) {
         const createdAt = new Date(pet.createdAt);
         const now = new Date();
         const diff = Math.floor((now - createdAt) / 1000);
-        
+
         if (diff < 60) return 'Just now';
-        if (diff < 3600) return `${Math.floor(diff/60)}m ago`;
-        if (diff < 86400) return `${Math.floor(diff/3600)}h ago`;
-        return `${Math.floor(diff/86400)}d ago`;
+        if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+        return `${Math.floor(diff / 86400)}d ago`;
     };
 
     const handleShowInterest = () => {
@@ -37,7 +40,7 @@ function PetCards({ pet }) {
             alert('Please login to show interest');
             return;
         }
-        
+
         navigate('/adoption-form', {
             state: {
                 pet,
@@ -48,13 +51,13 @@ function PetCards({ pet }) {
 
     return (
         <>
-            <div className="pet">
+            <div className="pet mt-3">
                 <Card className="pet-card">
                     <button className='card-image-btn' onClick={handleShow}>
-                        <img 
-                            src={`${serverUrl}/uploads/${pet.petimg}`} 
-                            alt={pet.name} 
-                            className="child-image" 
+                        <img
+                            src={`${serverUrl}/uploads/${pet.petimg}`}
+                            alt={pet.name}
+                            className="child-image"
                         />
                         {/* Adoption status badge */}
                         {pet.status === 'adopted' && (
@@ -63,10 +66,10 @@ function PetCards({ pet }) {
                             </div>
                         )}
                     </button>
-                    
+
                     <Card.Body className="card-body">
                         <Card.Title className="pet-name">{pet.name}</Card.Title>
-                        
+
                         <div className="pet-details">
                             <p><span>Type:</span> {pet.petType}</p>
                             <p><span>Age:</span> {pet.ageYears}y {pet.ageMonths}m</p>
@@ -76,7 +79,7 @@ function PetCards({ pet }) {
                         </div>
 
                         {/* Conditional Show Interest button */}
-                        <button 
+                        <button
                             className={`interest-btn ${pet.status === 'adopted' ? 'disabled' : ''}`}
                             onClick={handleShowInterest}
                             disabled={pet.status === 'adopted'}
@@ -95,7 +98,7 @@ function PetCards({ pet }) {
                         {pet.name}'s Full Profile
                     </Modal.Title>
                 </Modal.Header>
-                
+
                 <Modal.Body className="modal-body">
                     <div className="pet-details-container">
                         <div className="pet-image-gallery">
@@ -144,6 +147,14 @@ function PetCards({ pet }) {
                                                 ))
                                             ) : 'No vaccinations recorded'}
                                         </div>
+                                        <p>
+                                            <strong>
+                                                Next Vaccination Date: {pet?.createdAt ?
+                                                    new Date(new Date(pet.createdAt).getTime() + (20 * 24 * 60 * 60 * 1000))
+                                                        .toLocaleDateString('en-GB')
+                                                    : 'N/A'}
+                                            </strong>
+                                        </p>
                                     </div>
                                     <div className="medical-notes">
                                         <p><strong>Health Notes:</strong> {pet.healthNotes || 'N/A'}</p>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getalladoptionuserApi, getalluserApi } from '../../services/allApi';
+import { deleteAdoptionUserApi, getalladoptionuserApi, getalluserApi } from '../../services/allApi';
 import './UserManagement.css';
 import { serverUrl } from '../../services/serverUrl';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 
 function UserManagement() {
@@ -34,6 +36,50 @@ function UserManagement() {
     fetchUsers();
   }, []);
 
+
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      // Confirmation dialog
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      });
+
+      if (result.isConfirmed) {
+        // Call delete API
+        const response = await deleteAdoptionUserApi(userId);
+        console.log(response);
+        
+        
+        if (response.status === 200) {
+          // Update UI by removing the deleted user
+          setAdoptionUsers(prevUsers => prevUsers.filter(user => user._id !== userId));
+          
+          Swal.fire(
+            'Deleted!',
+            'The user has been deleted.',
+            'success'
+          );
+        } else {
+          throw new Error(response.message || 'Failed to delete user');
+        }
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      Swal.fire(
+        'Error!',
+        error.message || 'Failed to delete user',
+        'error'
+      );
+    }
+  };
+
   const UserCard = ({ user, type }) => (
     <div className="user-card">
       <div className="user-image">
@@ -63,20 +109,27 @@ function UserManagement() {
 
   return (
     <div className="user-management-container">
-      <h1 className="management-header">User Management</h1>
-      
+      <Link to={'/admin-dashboard'} style={{textDecoration:"none"}}><h1 className="management-header">User Management</h1></Link>
       <div className="user-category">
-        <h2>Adoption Users ({adoptionUsers.length})</h2>
-        <div className="users-grid">
-          {adoptionUsers.length > 0 ? (
-            adoptionUsers.map(user => (
+      <h2>Adoption Users ({adoptionUsers.length})</h2>
+      <div className="users-grid">
+        {adoptionUsers.length > 0 ? (
+          adoptionUsers.map(user => (
+            <div key={user._id} className="user-card-wrapper">
               <UserCard key={user._id} user={user} type="Adoption" />
-            ))
-          ) : (
-            <p className="no-users">No adoption users found</p>
-          )}
-        </div>
+              <button 
+                onClick={() => handleDeleteUser(user._id)}
+                className="btn btn-danger btn-sm delete-btn"
+              >
+                Delete User
+              </button>
+            </div>
+          ))
+        ) : (
+          <p className="no-users">No adoption users found</p>
+        )}
       </div>
+    </div>
 
       <div className="user-category">
         <h2>Grooming Users ({groomingUsers.length})</h2>

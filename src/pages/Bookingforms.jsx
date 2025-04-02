@@ -321,8 +321,6 @@ function Bookingforms() {
                       <option value="">Select Pet Type</option>
                       <option value="Dog">Dog</option>
                       <option value="Cat">Cat</option>
-                      <option value="Bird">Bird</option>
-                      <option value="Other">Other</option>
                     </Form.Select>
                   </div>
                   <div className="col-md-6">
