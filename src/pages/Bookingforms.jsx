@@ -153,7 +153,31 @@ function Bookingforms() {
   };
 
   const handlePaymentChange = (e) => {
-    setPaymentDetails({ ...paymentDetails, [e.target.id]: e.target.value });
+    const { id, value } = e.target;
+    
+    // Format card number input
+    if (id === 'cardNumber') {
+      const formatted = value
+        .replace(/\D/g, '')
+        .match(/.{1,4}/g)
+        ?.join(' ')
+        .substr(0, 19);
+      setPaymentDetails(prev => ({ ...prev, [id]: formatted || '' }));
+      return;
+    }
+
+    // Format expiry date input
+    if (id === 'expiryDate') {
+      const formatted = value
+        .replace(/\D/g, '')
+        .match(/.{1,2}/g)
+        ?.join('/')
+        .substr(0, 5);
+      setPaymentDetails(prev => ({ ...prev, [id]: formatted || '' }));
+      return;
+    }
+
+    setPaymentDetails(prev => ({ ...prev, [id]: value }));
   };
 
   const handleClose = () => setShow(false);
@@ -171,11 +195,63 @@ function Bookingforms() {
       return;
     }
 
-    if (!paymentDetails.cardNumber || !paymentDetails.expiryDate || !paymentDetails.cvv) {
+    // Payment validations
+    const { cardName, cardNumber, expiryDate, cvv } = paymentDetails;
+
+    // Card Number Validation (16 digits)
+    const sanitizedCardNumber = cardNumber.replace(/\D/g, '');
+    if (sanitizedCardNumber.length !== 16 || !/^[0-9]{16}$/.test(sanitizedCardNumber)) {
       Swal.fire({
-        title: 'Payment Required',
-        text: 'Please complete payment information',
-        icon: 'warning',
+        title: 'Invalid Card Number',
+        text: 'Please enter a valid 16-digit card number',
+        icon: 'error',
+      });
+      return;
+    }
+
+    // Expiry Date Validation (MM/YY format)
+    if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate)) {
+      Swal.fire({
+        title: 'Invalid Expiry Date',
+        text: 'Please use MM/YY format (e.g., 12/25)',
+        icon: 'error',
+      });
+      return;
+    }
+
+    // Check if card is expired
+    const [inputMonth, inputYear] = expiryDate.split('/');
+    const currentYear = new Date().getFullYear() % 100;
+    const currentMonth = new Date().getMonth() + 1;
+
+    if (
+      parseInt(inputYear) < currentYear ||
+      (parseInt(inputYear) === currentYear && parseInt(inputMonth) < currentMonth)
+    ) {
+      Swal.fire({
+        title: 'Card Expired',
+        text: 'This card has already expired',
+        icon: 'error',
+      });
+      return;
+    }
+
+    // CVV Validation (3 or 4 digits)
+    if (!/^[0-9]{3,4}$/.test(cvv)) {
+      Swal.fire({
+        title: 'Invalid CVV',
+        text: 'Please enter a 3 or 4-digit security code',
+        icon: 'error',
+      });
+      return;
+    }
+
+    // Cardholder Name Validation
+    if (!cardName.trim()) {
+      Swal.fire({
+        title: 'Missing Name',
+        text: 'Please enter the cardholder name',
+        icon: 'error',
       });
       return;
     }
@@ -454,6 +530,7 @@ function Bookingforms() {
                     placeholder="John Doe"
                     value={paymentDetails.cardName}
                     onChange={handlePaymentChange}
+                    required
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
@@ -464,6 +541,8 @@ function Bookingforms() {
                     placeholder="1234 5678 9012 3456"
                     value={paymentDetails.cardNumber}
                     onChange={handlePaymentChange}
+                    maxLength={19}
+                    required
                   />
                 </Form.Group>
                 <div className="row g-2">
@@ -476,6 +555,8 @@ function Bookingforms() {
                         placeholder="MM/YY"
                         value={paymentDetails.expiryDate}
                         onChange={handlePaymentChange}
+                        maxLength={5}
+                        required
                       />
                     </Form.Group>
                   </div>
@@ -483,11 +564,13 @@ function Bookingforms() {
                     <Form.Group className="mb-3">
                       <Form.Label>CVV</Form.Label>
                       <Form.Control
-                        type="text"
+                        type="password"
                         id="cvv"
                         placeholder="123"
                         value={paymentDetails.cvv}
                         onChange={handlePaymentChange}
+                        maxLength={4}
+                        required
                       />
                     </Form.Group>
                   </div>

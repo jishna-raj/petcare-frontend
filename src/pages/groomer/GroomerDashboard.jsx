@@ -5,27 +5,29 @@ import {
   FaFileAlt, FaBars, FaTimesCircle, FaChevronDown, FaChevronUp
 } from "react-icons/fa";
 import "./EmployeeDashboard.css";
-import { 
-  getAGroomerApi, 
-  getGroomerBookingsApi, 
-  postMessageApi, 
-  updateBookingStatusApi, 
-  updateGroomerApi 
+import {
+  getAGroomerApi,
+  getGroomerBookingsApi,
+  postMessageApi,
+  updateBookingStatusApi,
+  updateGroomerApi
 } from "../../services/allApi";
 import { Link, useNavigate } from "react-router-dom";
 import { serverUrl } from "../../services/serverUrl";
 import GroomerUpdation from "./GroomerUpdation";
 import { messageSentResponseContext } from "../../context/Contextshare";
 
-const BookingCard = ({ 
-  booking, 
-  expandedRequest, 
-  setExpandedRequest, 
-  handleStatusUpdate, 
-  isCompleted 
+const BookingCard = ({
+  booking,
+  expandedRequest,
+  setExpandedRequest,
+  handleStatusUpdate,
+  isCompleted
 }) => {
   const [processing, setProcessing] = useState(false);
   const [actionError, setActionError] = useState(null);
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const handleStatusChange = async (newStatus) => {
     try {
@@ -38,6 +40,69 @@ const BookingCard = ({
     } finally {
       setProcessing(false);
     }
+  };
+
+  const handleContactOwner = (booking) => {
+    if (booking.customer) {
+      setSelectedUser({
+        name: booking.customer.name,
+        email: booking.customer.email,
+        phone: booking.customer.phone,
+        place: booking.customer.place
+      });
+      setShowUserModal(true);
+    }
+  };
+
+
+  const UserDetailsModal = ({ user, onClose }) => {
+    if (!user) return null;
+  
+    return (
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-header">
+            <h3>Customer Details</h3>
+            <button className="modal-close" onClick={onClose}>
+              <FaTimesCircle />
+            </button>
+          </div>
+          <div className="modal-body">
+            <div className="user-info-grid">
+              <div className="user-info-item">
+                <FaUser className="info-icon" />
+                <div>
+                  <h4>Name</h4>
+                  <p>{user.name}</p>
+                </div>
+              </div>
+              <div className="user-info-item">
+                <FaEnvelope className="info-icon" />
+                <div>
+                  <h4>Email</h4>
+                  <p>{user.email}</p>
+                </div>
+              </div>
+              <div className="user-info-item">
+                <FaPhone className="info-icon" />
+                <div>
+                  <h4>Phone</h4>
+                  <p>{user.phone}</p>
+                </div>
+              </div>
+              <div className="user-info-item">
+                <FaMapMarkerAlt className="info-icon" />
+                <div>
+                  <h4>Location</h4>
+                  <p>{user.place}</p>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -129,18 +194,27 @@ const BookingCard = ({
 
               <button
                 className="btn btn-outline-secondary"
-                onClick={() => {/* Implement contact owner */}}
+                onClick={() => handleContactOwner(booking)}
               >
                 <FaEnvelope className="me-2" />
-                Contact Owner
+                Customer
               </button>
             </div>
           )}
         </div>
       )}
+
+      {showUserModal && (
+        <UserDetailsModal 
+          user={selectedUser} 
+          onClose={() => setShowUserModal(false)} 
+        />
+      )}
     </div>
   );
 };
+
+
 
 const DetailItem = ({ label, value, isStrong = false, fullWidth = false }) => (
   <div className={`detail-item ${fullWidth ? 'full-width' : ''}`}>
@@ -280,6 +354,7 @@ export default function GroomerDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [customers, setCustomer] = useState([])
 
   const { setMessagesent } = useContext(messageSentResponseContext);
   const navigate = useNavigate();
@@ -318,11 +393,16 @@ export default function GroomerDashboard() {
         if (!groomerId) throw new Error("Invalid groomer ID");
 
         const groomerResponse = await getAGroomerApi(groomerId);
+        /* console.log(groomerResponse); */
+
         setGroomerData(groomerResponse.data);
 
         const bookingsResponse = await getGroomerBookingsApi(groomerId);
+        console.log(bookingsResponse.data.data);
+
         if (bookingsResponse.data?.data) {
           setBookings(bookingsResponse.data.data);
+          setCustomer(bookingsResponse.data.data.customer)
         }
       } catch (err) {
         setError(err.message || "Failed to fetch data");
@@ -354,7 +434,7 @@ export default function GroomerDashboard() {
 
       const result = await postMessageApi(messageData);
       console.log(result);
-      
+
       if (result.status === 201) {
         setMessagesent(result.data);
         return true;
@@ -389,8 +469,8 @@ export default function GroomerDashboard() {
                   return {
                     ...slot,
                     status: newStatus === 'Confirmed' ? 'booked' :
-                           newStatus === 'Completed' ? 'available' : 
-                           slot.status
+                      newStatus === 'Completed' ? 'available' :
+                        slot.status
                   };
                 }
                 return slot;
@@ -409,7 +489,7 @@ export default function GroomerDashboard() {
         await updateGroomerApi(groomerData._id, { availability: updatedAvailability });
 
         // Update bookings
-        setBookings(prev => prev.map(b => 
+        setBookings(prev => prev.map(b =>
           b._id === bookingId ? { ...b, status: newStatus } : b
         ));
 
@@ -482,7 +562,7 @@ export default function GroomerDashboard() {
               />
               <span>{groomerData.name}</span>
             </div>
-           <Link to={'/groomer-review'}> <button className="btn btn-outline-success">Reviews</button></Link>
+            <Link to={'/groomer-review'}> <button className="btn btn-outline-success">Reviews</button></Link>
             <button className="btn btn-light" onClick={handleSignOut}>
               Sign Out
             </button>

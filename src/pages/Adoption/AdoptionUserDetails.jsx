@@ -12,6 +12,8 @@ function AdoptionUserDetails() {
       try {
         // Get user from session storage
         const sessionUser = sessionStorage.getItem('adoptionUser');
+        console.log(sessionUser);
+        
         if (!sessionUser) {
           setError('User not authenticated');
           setLoading(false);

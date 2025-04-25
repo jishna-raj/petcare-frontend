@@ -9,7 +9,7 @@ import Userprofile from './pages/Userprofile'
 import Admin from './pages/Admin'
 import Bookingforms from './pages/Bookingforms'
 import Header from './component/Header'
-import Adminemail from './pages/Adminemail'
+/* import Adminemail from './pages/Adminemail' */
 import AdoptionHome from './pages/Adoption/AdoptionHome'
 import AdReg from './pages/Adoption/AdReg'
 import AdoptionLogin from './pages/Adoption/AdoptionLogin'
@@ -46,7 +46,7 @@ function App() {
       <Route path='/userprofile' element={<Userprofile/>}/>
       <Route path='/admin' element={<Admin/>}/>
       <Route path='/book' element={<Bookingforms/>}/>
-      <Route path='/message' element={<Adminemail/>}/>
+    {/*   <Route path='/message' element={<Adminemail/>}/> */}
 
       <Route path='/adoption' element={<AdoptionHome/>}/>
       <Route path='/adreg' element={<AdReg/>}/>

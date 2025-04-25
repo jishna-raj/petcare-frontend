@@ -1,4 +1,4 @@
-import { faCheckCircle, faChevronDown, faChevronUp, faPaw, faUserTie, faMapMarkerAlt, faCalendarAlt, faClock, faMoneyBillWave, faInfoCircle, faWalking, faCut, faTaxi, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faChevronDown, faChevronUp, faPaw, faUserTie, faMapMarkerAlt, faCalendarAlt, faClock, faMoneyBillWave, faInfoCircle, faWalking, faCut, faTaxi, faTimes, faClipboard } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useEffect, useState } from 'react';
 import { getBookingApi } from '../services/allApi';

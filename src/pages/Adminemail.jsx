@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+/* import React, { useRef } from 'react'
 // import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
@@ -38,4 +38,4 @@ function Adminemail() {
   )
 }
 
-export default Adminemail
+export default Adminemail */

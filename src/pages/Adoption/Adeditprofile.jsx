@@ -21,7 +21,6 @@ function Adeditprofile() {
   });
   const [existingImage, setExistingImage] = useState("");
 
-  // Fetch user details from sessionStorage when the modal is opened
   const handleShow = () => {
     if (sessionStorage.getItem("adoptionUser")) {
       const user = JSON.parse(sessionStorage.getItem("adoptionUser"));
@@ -35,17 +34,24 @@ function Adeditprofile() {
       });
       setExistingImage(user.img);
     }
-    setShow(true); // Open the modal
+    setShow(true);
   };
 
   useEffect(() => {
-    if (userDetails.img) {
-      setPreview(URL.createObjectURL(userDetails.img));
+    // Only create object URL if img is a File object
+    if (userDetails.img && userDetails.img instanceof File) {
+      const objectUrl = URL.createObjectURL(userDetails.img);
+      setPreview(objectUrl);
+      
+      // Clean up the object URL when component unmounts or img changes
+      return () => URL.revokeObjectURL(objectUrl);
     }
   }, [userDetails.img]);
 
   const handlefile = (e) => {
-    setUserDetails({ ...userDetails, img: e.target.files[0] });
+    if (e.target.files && e.target.files[0]) {
+      setUserDetails({ ...userDetails, img: e.target.files[0] });
+    }
   };
 
   const handleEdit = async () => {
@@ -77,18 +83,27 @@ function Adeditprofile() {
               Authorization: `Bearer ${token}`,
             };
 
-        const result = await editadoptionUserApi(reqBody, reqHeader);
-        if (result.status === 200) {
+        try {
+          const result = await editadoptionUserApi(reqBody, reqHeader);
+          if (result.status === 200) {
+            Swal.fire({
+              title: 'Wow',
+              text: 'Edited successfully',
+              icon: 'success',
+            });
+            setEditResponse(result.data);
+            handleClose();
+          } else {
+            alert("Something went wrong");
+            handleClose();
+          }
+        } catch (error) {
+          console.error("Error editing profile:", error);
           Swal.fire({
-            title: 'Wow',
-            text: 'Edited successfully',
-            icon: 'success',
+            title: 'Error',
+            text: 'Failed to update profile',
+            icon: 'error',
           });
-          setEditResponse(result.data);
-          handleClose();
-        } else {
-          alert("Something went wrong");
-          handleClose();
         }
       }
     }
@@ -114,28 +129,22 @@ function Adeditprofile() {
                   type="file"
                   style={{ display: 'none' }}
                   id="profileImg"
-                  onChange={(e) => handlefile(e)}
+                  onChange={handlefile}
+                  accept="image/*"
                 />
-                {existingImage === "" ? (
-                  <img
-                    src={
-                      preview
-                        ? preview
+                <img
+                  src={
+                    preview 
+                      ? preview 
+                      : existingImage 
+                        ? `${serverUrl}/uploads/${existingImage}`
                         : "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
-                    }
-                    alt=""
-                    width={'180px'}
-                    height={'180px'}
-                  />
-                ) : (
-                  <img
-                    src={preview ? preview : `${serverUrl}/uploads/${existingImage}`}
-                    alt="no img"
-                    width={'180px'}
-                    height={'180px'}
-                    style={{ borderRadius: '50%' }}
-                  />
-                )}
+                  }
+                  alt="Profile"
+                  width={'180px'}
+                  height={'180px'}
+                  style={{ borderRadius: '50%' }}
+                />
               </label>
             </div>
             <div className="col-md-6">
@@ -163,7 +172,7 @@ function Adeditprofile() {
               </div>
               <div className="mb-3">
                 <input
-                  type="text"
+                  type="password"
                   placeholder="password"
                   className="form-control"
                   value={userDetails.password}
