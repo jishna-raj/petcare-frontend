@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './AdReg.css';
 import Swal from 'sweetalert2'
 import { adoptionregisterApi } from '../../services/allApi';
@@ -135,7 +135,7 @@ function AdReg() {
           </form>
           
           <div className="login-link">
-            <p>Already have an account? <a href="/adlogin">Log in here</a></p>
+            <p>Already have an account? <Link to={'/adlogin'}>Log in here</Link></p>
           </div>
         </div>
       </section>
